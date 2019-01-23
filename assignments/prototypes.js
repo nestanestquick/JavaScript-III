@@ -8,8 +8,9 @@
   Each constructor function has unique properties and methods that are defined in their block comments below:
 */
   
+
+
 /*
- /*
   === GameObject ===
   * createdAt
   * dimensions (These represent the character's size in the video game)
@@ -20,8 +21,8 @@ function GameObject(input) {
   this.dimensions = input.dimensions;
 }
 
-GameObject.prototype.destroy = function() {
-  return `${input} has been removed from the game.`;
+Humanoid.prototype.destroy = function() {
+  console.log(this.attribute + 'has been removed from the game.');
 }
 
 
@@ -35,13 +36,15 @@ GameObject.prototype.destroy = function() {
 function CharacterStats(info) {
   this.healthPoints = info.age;
   this.name = info.name;
-  this.takeDamage = `${info.name} took damage!`;
-  
 }
 
 
 CharacterStats.prototype = Object.create(GameObject.prototype);
-/*
+
+CharacterStats.prototype.takeDamage = function() {
+   console.log(this.name + ' took damage!!');
+}
+   /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
   * weapons
@@ -66,8 +69,12 @@ CharacterStats.prototype = Object.create(GameObject.prototype);
  Humanoid.prototype = Object.create(CharacterStats.prototype);
 
  Humanoid.prototype.greet = function() {
-   console.log(CharacterStats.name + ' offers a greeting in ' + CharacterStats.language);
+   console.log(this.name + ' offers a greeting in ' + this.language);
  }
+ Humanoid.prototype.destroy = function() {
+   console.log(this.humanoid + 'has been removed from the game.');
+ }
+
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -138,7 +145,6 @@ CharacterStats.prototype = Object.create(GameObject.prototype);
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
