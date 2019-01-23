@@ -9,15 +9,21 @@
 */
   
 /*
+ /*
   === GameObject ===
   * createdAt
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method -> returns the string: 'Object was removed from the game.'
 */
-function GameObject(dimensions, createdAt,) {
+function GameObject(input) {
   this.createdAt = input.createdAt;
   this.dimensions = input.dimensions;
 }
+
+GameObject.prototype.destroy = function() {
+  return `${input} has been removed from the game.`;
+}
+
 
 /*
   === CharacterStats ===
@@ -26,12 +32,15 @@ function GameObject(dimensions, createdAt,) {
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
-function CharacterStats(stats) {
-  this.healthPoints = stats.age;
-  this.name = stats.name;
-  this.takeDamage = `${stats.name} took damage!`;
+function CharacterStats(info) {
+  this.healthPoints = info.age;
+  this.name = info.name;
+  this.takeDamage = `${info.name} took damage!`;
+  
 }
 
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -41,9 +50,25 @@ function CharacterStats(stats) {
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
- function Humanoid () {
+ function Humanoid (attributes) {
+   this.name = attributes.name;
+   this.healthPoints = attributes.healthPoints;
+   this.team = attributes.team;
+   this.weapons = attributes.weapons;
+   this.language= attributes.language;
+   this.dimensions = attributes.dimensions;
+   this.createdAt = attributes.createdAt;
+   this.destroy = attributes.destroy;
    
+
  }
+
+ Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+ Humanoid.prototype.greet = function() {
+   console.log(CharacterStats.name + ' offers a greeting in ' + CharacterStats.language);
+ }
+ 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -52,7 +77,7 @@ function CharacterStats(stats) {
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -113,7 +138,7 @@ function CharacterStats(stats) {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
